@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Parking Spot Finder</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJfJYO8pOycJjH2Gv5mZpC5epI13I2Qk58yGp46Ih0O9mF6yZ5kV6ZyN5Lh0" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
 
@@ -15,7 +15,7 @@
       font-family: Arial, sans-serif;
     }
 
-    /* Header Styles */
+    /* Header Section */
     .header-bg {
       background-color: #007bff;
       color: white;
@@ -29,10 +29,6 @@
       letter-spacing: 2px;
     }
 
-    .lead {
-      font-size: 1.25rem;
-    }
-
     /* Map Section */
     #map {
       width: 100%;
@@ -40,7 +36,7 @@
       margin-top: 20px;
     }
 
-    /* Form Styles */
+    /* Reservation Form Styles */
     .reservation-form-card {
       background-color: #ffffff;
       padding: 30px;
@@ -72,41 +68,31 @@
       background-color: #0056b3;
     }
 
-    .input-field {
-      transition: all 0.3s ease-in-out;
+    /* Hover Effect for Map Markers */
+    .hover-marker {
+      cursor: pointer;
+      transition: transform 0.3s ease;
     }
 
-    .input-field:focus {
-      background-color: #e9f7ff;
-      transform: scale(1.05);
+    .hover-marker:hover {
+      transform: scale(1.2);
     }
 
-    .confirmation-message {
-      background-color: #d4edda;
-      color: #155724;
-      padding: 10px;
-      margin-top: 20px;
+    /* Image Style for InfoWindow */
+    .info-window-content img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
       border-radius: 5px;
-      display: none;
-    }
-
-    .error-message {
-      background-color: #f8d7da;
-      color: #721c24;
-      padding: 10px;
-      margin-top: 20px;
-      border-radius: 5px;
-      display: none;
     }
   </style>
-
 </head>
 <body>
 
   <!-- Header Section -->
   <header class="header-bg">
-    <h1 class="header-text animate__animated animate__zoomIn">Find Your Parking Spot</h1>
-    <p class="lead animate__animated animate__fadeIn animate__delay-1s">Find a spot, reserve it, and go!</p>
+    <h1 class="header-text">Find Your Parking Spot</h1>
+    <p class="lead">Find a spot, reserve it, and go!</p>
   </header>
 
   <!-- Map Section -->
@@ -114,44 +100,178 @@
 
   <!-- Reservation Form Section -->
   <div class="container reservation-container">
-   <center> <h2 class="text-center mb-4">Parking Spot Reservation</h2></center>
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="reservation-form-card">
-          <form id="reservationForm">
-            <div class="mb-3">
-              <center><label for="userName" class="form-label">Full Name</label>
-              <input type="text" class="form-control input-field" id="userName" placeholder="Enter your full name" required></center><br>
-            </div>
-            <div class="mb-3">
-                <center> <label for="phoneNumber" class="form-label">Phone Number</label>
-              <input type="text" class="form-control input-field" id="phoneNumber" placeholder="Enter your phone number" required></center><br>
-            </div>
-            <div class="mb-3">
-                <center>  <label for="vehicleDetails" class="form-label">Vehicle Details</label>
-              <input type="text" class="form-control input-field" id="vehicleDetails" placeholder="Enter your vehicle model" required></center><br>
-            </div>
-            <div class="mb-3">
-                <center>  <label for="spotSelect" class="form-label">Choose Spot</label>
-              <select class="form-select input-field" id="spotSelect" required>
-                <option value="" disabled selected>Select a Spot</option>
-              </select></center><br>
-            </div>
-            <div class="mb-3">
-                <center> <label for="duration" class="form-label">Duration (in hours)</label>
-              <input type="number" class="form-control input-field" id="duration" min="1" required></center><br>
-            </div>
-            <center><button type="submit" class="btn reservation-form-button w-100">Reserve Spot</button>
-          </form>
-          <div class="confirmation-message" id="reservationStatus"></div>
-          <div class="error-message" id="errorStatus"></div></center>
+    <center> 
+      <h2 class="text-center mb-4">Parking Spot Reservation</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="reservation-form-card">
+            <form id="reservationForm">
+              <div class="mb-3">
+                <label for="userName" class="form-label">Full Name</label>
+                <input type="text" class="form-control input-field" id="userName" placeholder="Enter your full name" required>
+              </div>
+              <div class="mb-3">
+                <label for="phoneNumber" class="form-label">Phone Number</label>
+                <input type="text" class="form-control input-field" id="phoneNumber" placeholder="Enter your phone number" required>
+              </div>
+              <div class="mb-3">
+                <label for="vehicleDetails" class="form-label">Vehicle Details</label>
+                <input type="text" class="form-control input-field" id="vehicleDetails" placeholder="Enter your vehicle model" required>
+              </div>
+              <div class="mb-3">
+                <label for="spotSelect" class="form-label">Choose Spot</label>
+                <select class="form-select input-field" id="spotSelect" required>
+                  <option value="" disabled selected>Select a Spot</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="reservationDate" class="form-label">Reservation Date</label>
+                <input type="date" class="form-control input-field" id="reservationDate" required>
+              </div>
+              <div class="mb-3">
+                <label for="reservationTime" class="form-label">Reservation Time</label>
+                <input type="time" class="form-control input-field" id="reservationTime" required>
+              </div>
+              <!-- Added duration field -->
+              <div class="mb-3">
+                <label for="duration" class="form-label">Reservation Duration</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="durationHours" placeholder="Hours" min="1" required>
+                  <input type="number" class="form-control" id="durationMinutes" placeholder="Minutes" min="0" max="59" required>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Reserve Spot</button>
+            </form>
+            <div class="confirmation-message" id="reservationStatus"></div>
+            <div class="error-message" id="errorStatus"></div>
+          </div>
         </div>
       </div>
-    </div>
+    </center>
   </div>
-<footer><center><br>Thanks for Choosing Us!<br><br>All rights Reserved <br><br>Contact: 36249644563632<br><br>bookyouslot@gmail.com<br><br>@2024 - 2025</center></footer>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDCWInZ8xfDiI4XFn-ayCqcrHX3WLqShU&callback=initMap" async defer></script>
-  <script src="script.js"></script>
 
+  <!-- Footer Section -->
+  <footer>
+    <center>Thanks for Choosing Us!<br> All rights Reserved.<br>@2025</center>
+  </footer>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCew1NYEmkr6B9mUZS9MCRNpGvgT9TgBY4&callback=initMap" async defer></script>
+  <script>
+    let map;
+    let markers = [];
+    let parkingSpots = [];
+
+    // Function to generate random parking spots (100 spots scattered)
+    function generateRandomSpots() {
+      const spots = [];
+      const baseLat = 40.730610; // Central point latitude
+      const baseLng = -73.935242; // Central point longitude
+
+      for (let i = 0; i < 100; i++) {
+        let randomLat = baseLat + (Math.random() - 0.5) * 0.05; // Randomize lat within range
+        let randomLng = baseLng + (Math.random() - 0.5) * 0.05; // Randomize lng within range
+        spots.push({
+          lat: randomLat,
+          lng: randomLng,
+          name: `Spot ${i + 1}`,
+          image: 'https://via.placeholder.com/100', // Sample image URL for each spot
+          reserved: false
+        });
+      }
+
+      return spots;
+    }
+
+    // Initialize the Google Map
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 40.730610, lng: -73.935242 },
+        zoom: 14
+      });
+
+      parkingSpots = generateRandomSpots(); // Generate the 100 parking spots
+
+      // Loop through the parking spots and add markers
+      parkingSpots.forEach(spot => {
+        const marker = new google.maps.Marker({
+          position: { lat: spot.lat, lng: spot.lng },
+          map: map,
+          title: spot.name,
+          icon: spot.reserved ? 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png' : 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+          animation: google.maps.Animation.DROP,
+          className: 'hover-marker' // Add custom class for hover effect
+        });
+
+        markers.push(marker); // Store the marker
+
+        // Add the spot to the dropdown
+        const option = document.createElement("option");
+        option.value = spot.name;
+        option.textContent = spot.name;
+        document.getElementById("spotSelect").appendChild(option);
+
+        let infowindow;
+
+        // Add hover effect: show info window with image on hover
+        google.maps.event.addListener(marker, 'mouseover', function() {
+          const contentString = `
+            <div class="info-window-content">
+              <h3>${spot.name}</h3>
+              <img src="${spot.image}" alt="Parking Spot Image">
+            </div>
+          `;
+          infowindow = new google.maps.InfoWindow({
+            content: contentString
+          });
+          infowindow.open(map, marker);
+        });
+
+        google.maps.event.addListener(marker, 'mouseout', function() {
+          // Close the InfoWindow when mouse leaves
+          infowindow.close();
+        });
+
+        // Add click event to the marker
+        marker.addListener('click', function() {
+          if (spot.reserved) {
+            alert("This spot is already reserved.");
+          } else {
+            if (confirm(`Do you want to reserve ${spot.name}?`)) {
+              spot.reserved = true;
+              marker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
+              alert(`${spot.name} has been successfully reserved!`);
+            }
+          }
+        });
+      });
+    }
+
+    // Handle form submission
+    document.getElementById('reservationForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const userName = document.getElementById("userName").value;
+      const phoneNumber = document.getElementById("phoneNumber").value;
+      const vehicleDetails = document.getElementById("vehicleDetails").value;
+      const selectedSpot = document.getElementById("spotSelect").value;
+      const reservationDate = document.getElementById("reservationDate").value;
+      const reservationTime = document.getElementById("reservationTime").value;
+      
+      const durationHours = parseInt(document.getElementById("durationHours").value);
+      const durationMinutes = parseInt(document.getElementById("durationMinutes").value);
+
+      const spot = parkingSpots.find(spot => spot.name === selectedSpot);
+
+      if (spot && !spot.reserved) {
+        spot.reserved = true;
+        document.getElementById("reservationStatus").style.display = 'block';
+        document.getElementById("reservationStatus").textContent = `Reservation Confirmed! ${userName}, your vehicle (${vehicleDetails}) is reserved at ${selectedSpot} for ${reservationDate} at ${reservationTime} for ${durationHours} hours and ${durationMinutes} minutes.`;
+        alert(`${selectedSpot} has been successfully reserved!`);
+      } else {
+        document.getElementById("errorStatus").style.display = 'block';
+        document.getElementById("errorStatus").textContent = "Please select a valid parking spot or check availability!";
+      }
+    });
+  </script>
 </body>
 </html>
